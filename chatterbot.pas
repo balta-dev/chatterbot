@@ -1,18 +1,18 @@
 program chatterbot;
 {$codepage UTF-8}
 
-uses handler in '.units/misc/handler.pas', 
-lista in '.units/misc/lista.pas', 
+uses handler in 'units/misc/handler.pas', 
+lista in 'units/misc/lista.pas', 
 sysutils, 
 crt, 
 keyboard, 
-visuales in '.units/screen/visuales.pas', 
-configuraciones in '.units/config/configuraciones.pas', 
-dia in '.units/misc/dia.pas', 
-music in '.units/misc/music.pas', 
-menuPrincipal in '.units/screen/menuPrincipal.pas', 
-paginas in '.units/screen/paginas.pas', 
-respuestas in '.units/screen/respuestas.pas';
+visuales in 'units/screen/visuales.pas', 
+configuraciones in 'units/config/configuraciones.pas', 
+dia in 'units/misc/dia.pas', 
+music in 'units/misc/music.pas', 
+menuPrincipal in 'units/screen/menuPrincipal.pas', 
+paginas in 'units/screen/paginas.pas', 
+respuestas in 'units/screen/respuestas.pas';
 
 procedure escribirPrompt(var entrada:string); //limita la longitud de escritura para evitar bugs
 var caracter: char;
@@ -163,7 +163,7 @@ procedure chequearArchivoData(var hayData:boolean);
 var archivo:textfile;
 begin
 
-	assign (archivo, '.\data\datos.txt');
+	assign (archivo, './data/datos.txt');
 	{$I-}
 	reset(archivo);
 	{$I+}
@@ -206,8 +206,12 @@ hayData:boolean;
 
 			crearDibujo;
 			box(25, 97, 8, 20, '.');
+
+			{$IFDEF Windows} 
 			gotoxy(3, 29);
 			if (songName <> '') and (musicaActiva) then writeln('Sonando: ' + songName);
+			{$ENDIF}
+
 			gotoxy(25,7);
 			write('Bienvenid@, ');
 			textcolor(colorTexto);
@@ -254,10 +258,12 @@ begin
 
 	If Not DirectoryExists('music') then CreateDir('music');
 	If Not DirectoryExists('data') then CreateDir('data');
-	If Not DirectoryExists('.units') then CreateDir('.units');
-	musicFinding(listaCanciones, index, Cmd, songName, StopSong);
 
-	if infoConfig[6]='Activada' then SendMCICommand(Cmd);
+	{$IFDEF Windows} 
+	musicFinding(listaCanciones, index, Cmd, songName, StopSong); 
+	if infoConfig[6]='Activada' then SendMCICommand(Cmd);; 
+	{$ENDIF}
+
 	if infoConfig[3]='Desactivado' then pantallaPrincipal(songName); //si esta desactivado, saltear pantalla principal
 
 	menu(infoConfig, songName, Cmd, StopSong);
