@@ -1,5 +1,7 @@
 program chatterbot;
+{$IFDEF Windows} 
 {$codepage UTF-8}
+{$ENDIF}
 
 uses handler in 'units/misc/handler.pas', 
 lista in 'units/misc/lista.pas', 

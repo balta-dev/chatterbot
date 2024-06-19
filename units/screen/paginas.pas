@@ -1,5 +1,7 @@
 unit paginas;
+{$IFDEF Windows} 
 {$codepage UTF-8}
+{$ENDIF}
 
 interface
 

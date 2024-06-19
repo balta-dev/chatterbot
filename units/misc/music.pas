@@ -16,7 +16,7 @@ implementation
 
 procedure SendMCICommand(Cmd: PChar);
 begin  
-	//mciSendString(Cmd, nil, 0, 0); 
+	{$IFDEF Windows} mciSendString(Cmd, nil, 0, 0); {$ENDIF} //solo funciona en Windows
 end;
 
 function musicRandomizer(var maxSongsFound:byte):byte;

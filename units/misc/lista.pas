@@ -1,6 +1,8 @@
 unit lista;
 
+{$IFDEF Windows} 
 {$codepage UTF-8}
+{$ENDIF}
 
 {$mode objfpc}{$H+}
 
